@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Item>
+
+<div class="container my-3">
+    <div class="row my-5">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow p-3 mb-5 bg-white rounded border-top border-5 rounded shadow" style="width: 18rem;">
+                    <img class="card-img-top img-fluid" src="@item.ImageUrl" alt="Card image cap" style=" height:20rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title fs-3 text fw-normal text-center">@item.Title</h5>
+                        <p class="card-text lh-base ">@DescLength(item.Description, 30)...</p>
+                        <p class="card-text fw-bold">By @item.AuthorName</p>
+                        <p class="card-text ">@item.Price$</p>
+                        <p class="card-text">@item.Genre</p>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary bg-gradient form-control w-100">Go to Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@functions {
+    public string DescLength(string description, int maxLength)
+    {
+        if (description.Length <= maxLength)
+        {
+            return description;
+        }
+        else
+        {
+            return description.Substring(0, maxLength) + "...";
+        }
+    }
+}

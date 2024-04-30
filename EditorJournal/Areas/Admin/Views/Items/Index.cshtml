@@ -1,0 +1,68 @@
+﻿@model List<Item>
+@if (TempData["success"] != null)
+{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <h2>@TempData["success"]</h2>
+}
+
+<div class="container border-1 mt-4">
+    <div class="row  p-2 bg-white text-dark d-flex justify-content-center align-items-center">
+        <div class="col-6">
+            <h2 class="">Item list.</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Items" asp-action="CreateUpdate">+ Add new list</a>
+        </div>
+    </div>
+
+    <table id="tblData" class="table table-striped mt-5">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Author Name</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Price</th>
+                <th scope="col">ImageUrl</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Obj in Model)
+            {
+                <tr>
+                    <td>@Obj.Id</td>
+                    <td>@Obj.Title</td>
+                    <td>@DescLength(Obj.Description, 30)</td>
+                    <td>@Obj.AuthorName</td>
+                    <td>@Obj.Genre</td>
+                    <td>@Obj.Price</td>
+                    <td><img src="~/@Obj.ImageUrl" alt="Alternate Text" width=3rem; height=4rem; /></td>
+                    <td>
+                        <div class="d-flex  gap-3">
+                            <a asp-controller="Items" asp-route-id="@Obj.Id" asp-action="CreateUpdate" class="btn btn-primary mx-2">Edit</a>
+                            <a asp-controller="Items" asp-action="Delete" asp-route-id="@Obj.Id" class="btn btn-danger mx-2">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+@functions {
+    public string DescLength(string description, int maxLength)
+    {
+        if (description.Length <= maxLength)
+        {
+            return description;
+        }
+        else
+        {
+            return description.Substring(0, maxLength) + "...";
+        }
+    }
+}
