@@ -1,20 +1,34 @@
-﻿using EditorJournal.dataSet.Database;
-using EditorJournal.dataSet.Repo.IRepo;
+﻿using EditorJournal.data.Repo.IRepo;
+using EditorJournal.dataSet.Database;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EditorJournal.dataSet.Repo
+namespace EditorJournal.data.Repo
 {
-    public class UnitOfWork<T> : IUnitOfWork<T> where T : class
+    public class UnitOfWork : IUnitOfWork
     {
-        private AppDBContext _Db;
-     
-        public ItemsRepo<T> ItemsRepo { get; private set; }
+        public readonly AppDBContext _Db;
+        public ItemsRepo ItemsRepo { get; private set; }
 
-        public UnitOfWork(AppDBContext Db)
+        public CompanyRepo CompanyRepo { get; private set; }
+
+        public ShoppingCartRepo ShoppingCartRepo { get; private set; }
+
+       
+        public AppUserRepo AppUserRepo { get; private set; }
+
+        public UnitOfWork(AppDBContext Db) 
         {
-           _Db= Db;
-          
-            ItemsRepo = new RepoItem<T>(_Db);
-    }
+            _Db = Db;
+            ItemsRepo = new ItemsImpleentation(_Db);
+            CompanyRepo = new CompanyRepoImplementation(_Db);
+            ShoppingCartRepo = new ShoppingCartRepoImplementation(_Db);
+            AppUserRepo = new AppUserImplementation(_Db);
+        }
+        
 
         public void Save()
         {

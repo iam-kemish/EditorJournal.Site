@@ -1,9 +1,10 @@
-﻿namespace EditorJournal.dataSet.Repo.IRepo
+﻿namespace EditorJournal.data.Repo.IRepo
 {
-    public interface IUnitOfWork<T> where T : class
+    public interface IUnitOfWork
     {
- 
- ItemsRepo<T> ItemsRepo {  get; }
+        public ItemsRepo ItemsRepo { get; }
+        public CompanyRepo CompanyRepo { get; }
+        public AppUserRepo AppUserRepo { get; }
         void Save();
     }
 }

@@ -1,5 +1,5 @@
 using EditorJournal.data.Models;
-using EditorJournal.dataSet.Repo.IRepo;
+using EditorJournal.data.Repo.IRepo;
 using EditorJournal.Modals;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,12 +10,12 @@ namespace EditorJournal.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork<Item> _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork<Item> unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork; 
         }
 
         public IActionResult Index()
@@ -36,8 +36,13 @@ namespace EditorJournal.Areas.Customer.Controllers
         }
         public IActionResult Details(int id)
         {
-            Item item = _unitOfWork.ItemsRepo.Get(u => u.Id == id);
-            return View(item);
+            ShoppingCart cart = new()
+            {
+                Item = _unitOfWork.ItemsRepo.Get(u => u.Id == id),
+                Count = 1
+            };
+            
+            return View(cart);
         }
 
     }

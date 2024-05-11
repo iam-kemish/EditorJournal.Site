@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorJournal", "EditorJournal\EditorJournal.csproj", "{8D1B6387-5BF8-4037-9F77-7A0C6CD8DDDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorJournal", "EditorJournal\EditorJournal.csproj", "{8D1B6387-5BF8-4037-9F77-7A0C6CD8DDDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorJournal.data", "EditorJournal.data\EditorJournal.data.csproj", "{C5A82963-F49B-48FF-8B92-0943052537B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorJournal.data", "EditorJournal.data\EditorJournal.data.csproj", "{C5A82963-F49B-48FF-8B92-0943052537B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorJournal.Modals", "EditorJournal.Modals\EditorJournal.Modals.csproj", "{C6F610F1-670C-451B-A3B8-FD303FBB87DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorJournal.Modals", "EditorJournal.Modals\EditorJournal.Modals.csproj", "{C6F610F1-670C-451B-A3B8-FD303FBB87DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

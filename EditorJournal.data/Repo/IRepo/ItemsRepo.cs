@@ -1,16 +1,15 @@
-﻿using System.Linq.Expressions;
+﻿using EditorJournal.Modals;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EditorJournal.dataSet.Repo.IRepo
+namespace EditorJournal.data.Repo.IRepo
 {
-    public interface ItemsRepo<T> where T : class
+    public interface ItemsRepo: IRepositary<Item>
     {
-       
-        IEnumerable<T> GetAll();
-        T Get(Expression<Func<T, bool>> filterItems);
-        void Add(T item);
-        void Remove(T item);
-        void RemoveRange(IEnumerable<T> items);
-        void Update(T Item);
-        
+        void update(Item item);
+
     }
 }

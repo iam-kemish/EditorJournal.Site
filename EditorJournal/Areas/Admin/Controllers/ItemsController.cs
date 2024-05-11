@@ -3,16 +3,18 @@
 
 using EditorJournal.Modals;
 using Microsoft.AspNetCore.Mvc;
-using EditorJournal.dataSet.Repo.IRepo;
+using Microsoft.AspNetCore.Authorization;
+using EditorJournal.data.Repo.IRepo;
 
 namespace EditorJournal.Areas.Admin.Controllers
 {
     [Area("Admin")]
+ 
     public class ItemsController : Controller
     {
-        private readonly IUnitOfWork<Item> _UnitOfWork;
+        private readonly IUnitOfWork _UnitOfWork;
         private readonly IWebHostEnvironment _WebHostEnvironment;
-        public ItemsController(IUnitOfWork<Item> Debase, IWebHostEnvironment webHostEnvironment)
+        public ItemsController(IUnitOfWork Debase, IWebHostEnvironment webHostEnvironment)
         {
             _UnitOfWork = Debase;
             _WebHostEnvironment = webHostEnvironment;
@@ -84,7 +86,7 @@ namespace EditorJournal.Areas.Admin.Controllers
                             currentItem.ImageUrl = obj.ImageUrl;
                           
                         }
-                        _UnitOfWork.ItemsRepo.Update(currentItem);
+                        _UnitOfWork.ItemsRepo.update(currentItem);
                     }
                     else
                     {
