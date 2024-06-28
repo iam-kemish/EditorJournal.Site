@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EditorJournal.Areas.Identity.Pages.Account
 {
+        [Area("Customer")]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;

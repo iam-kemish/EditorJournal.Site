@@ -1,3 +1,4 @@
+using EditorJournal.Modal;
 using EditorJournal.Modals;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,11 @@ namespace EditorJournal.dataSet.Database
         }
        
         public DbSet<Item> Items { get; set; }
-        public DbSet<AppUser> appUsers { get; set; }
-        public DbSet<Company> companies { get; set; }
-
-        public DbSet<ShoppingCart> shoppingCarts { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<OrderHeader> OrderHeaders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -43,11 +45,7 @@ namespace EditorJournal.dataSet.Database
                     State = "jamal",
                     PhoneNumber = "097798764534"
                 }
-            );
-
-
-            // Enable IDENTITY_INSERT for Items table
-
+                );
         }
 
 

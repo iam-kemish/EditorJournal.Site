@@ -1,8 +1,11 @@
 using EditorJournal.data.Models;
 using EditorJournal.data.Repo.IRepo;
+using EditorJournal.Modal;
 using EditorJournal.Modals;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace EditorJournal.Areas.Customer.Controllers
 {
@@ -36,14 +39,44 @@ namespace EditorJournal.Areas.Customer.Controllers
         }
         public IActionResult Details(int id)
         {
+            var item = _unitOfWork.ItemsRepo.Get(u => u.Id == id);
+            if (item == null)
+            {
+              
+                return NotFound();
+            }
+
             ShoppingCart cart = new()
             {
-                Item = _unitOfWork.ItemsRepo.Get(u => u.Id == id),
-                Count = 1
+                Item = item,
+                Count = 1,
+                ItemId = id
             };
-            
             return View(cart);
         }
 
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            shoppingCart.Id = 0;
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            shoppingCart.AppUserId=userId;
+        
+            ShoppingCart cartFromDatabase = _unitOfWork.ShoppingCartRepo.Get(u => u.AppUserId == userId && u.ItemId == shoppingCart.ItemId);
+            if(cartFromDatabase!= null)
+            {
+                cartFromDatabase.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingCartRepo.Update(cartFromDatabase);
+            }else
+            {
+
+            _unitOfWork.ShoppingCartRepo.Add(shoppingCart);
+            }
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

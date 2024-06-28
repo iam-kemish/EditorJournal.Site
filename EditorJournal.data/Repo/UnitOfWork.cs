@@ -1,10 +1,5 @@
 ﻿using EditorJournal.data.Repo.IRepo;
 using EditorJournal.dataSet.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EditorJournal.data.Repo
 {
@@ -20,6 +15,10 @@ namespace EditorJournal.data.Repo
        
         public AppUserRepo AppUserRepo { get; private set; }
 
+        public OrderDetailRepo OrderDetailRepo {  get; private set; }   
+
+        public OrderHeaderRepo OrderHeaderRepo { get; private set; }
+
         public UnitOfWork(AppDBContext Db) 
         {
             _Db = Db;
@@ -27,6 +26,8 @@ namespace EditorJournal.data.Repo
             CompanyRepo = new CompanyRepoImplementation(_Db);
             ShoppingCartRepo = new ShoppingCartRepoImplementation(_Db);
             AppUserRepo = new AppUserImplementation(_Db);
+            OrderHeaderRepo= new OrderHeaderImplementation(_Db);
+            OrderDetailRepo= new OrderDetailImplementation(_Db);
         }
         
 

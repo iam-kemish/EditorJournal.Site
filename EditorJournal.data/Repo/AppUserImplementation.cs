@@ -1,7 +1,6 @@
 ﻿using EditorJournal.data.Repo.IRepo;
 using EditorJournal.dataSet.Database;
 using EditorJournal.Modals;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace EditorJournal.data.Repo
 {
@@ -15,9 +14,6 @@ namespace EditorJournal.data.Repo
         }
     
 
-        public void Update(AppUser AppUser)
-        {
-            _Db.Update(AppUser);
-        }
+     
     }
 }

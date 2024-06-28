@@ -1,5 +1,6 @@
 ﻿using EditorJournal.data.Repo.IRepo;
 using EditorJournal.dataSet.Database;
+using EditorJournal.Modal;
 using EditorJournal.Modals;
 
 namespace EditorJournal.data.Repo

@@ -1,0 +1,82 @@
+﻿@model ShoppingCartVM
+
+<form method="post" asp-action="OrderConfirmation">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Order Summary</h2>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">User Details</h4>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" disabled asp-for="OrderHeader.Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" asp-for="OrderHeader.PhoneNumber" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" asp-for="OrderHeader.Address" disabled>
+                    </div>
+                </div>
+                <h4 class="mt-4">Order Details</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int snNumber = 1;
+                            }
+                            @foreach (var item in Model.ShoppingCartLists)
+                            {
+                                <tr>
+                                    <th scope="row">@snNumber</th>
+                                    <td>@item.Item.Title</td>
+                                    <td>@item.Count</td>
+                                    <td>@item.Item.Price $</td>
+                                    <td>@(item.Count * item.Item.Price)$</td>
+                                </tr>
+                                snNumber++;
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-right font-weight-bold"><strong>Total: @Model.OrderHeader.OrderTotal$</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <h4 class="mt-4">Summary</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="card-text">Order Date</p>
+                        <p class="card-text">Estimated Arrival Time</p>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p class="card-text">@DateTime.Now.ToShortDateString()</p>
+                        <p class="card-text">@DateTime.Now.AddDays(3).ToShortDateString() - @DateTime.Now.AddDays(6).ToShortDateString()</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                <button class="btn btn-primary" type="submit">Confirm Order</button>
+                <button class="btn btn-secondary" type="button" onclick="window.history.back();">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

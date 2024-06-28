@@ -1,4 +1,5 @@
-﻿using EditorJournal.Modals;
+﻿using EditorJournal.Modal;
+using EditorJournal.Modals;
 
 namespace EditorJournal.data.Repo.IRepo
 {

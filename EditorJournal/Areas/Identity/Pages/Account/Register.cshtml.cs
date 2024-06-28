@@ -101,13 +101,12 @@ namespace EditorJournal.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
             public string Role { get; set; }
             public IEnumerable<SelectListItem> RoleList { get; set; }
-            public string City { get; set; }
+            
             public string Name { get; set; }
             public string? Address { get; set; }
-            public string? PostalCode { get; set; }
-            public string? StreetName { get; set; }
-            public string? State { get; set; }
+            public string? PhoneNumber { get; set; }
             public int? CompanyID { get; set; }
+            public string? CellNumber { get; set; }
             public IEnumerable<SelectListItem> CompanyList { get; set; }
         }
         
@@ -148,19 +147,19 @@ namespace EditorJournal.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.PostalCode = Input.PostalCode;
-                user.City = Input.City;
-                user.StreetName = Input.StreetName;
-                user.State = Input.State;
+              
+             
                 user.Address = Input.Address;
+                user.PhoneNumber = Input.PhoneNumber;
                 user.Name = Input.Name;
                 user.CompanyID=Input.CompanyID;
+               
                  var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    if (string.IsNullOrEmpty(Input.Role))
+                    if (!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);   
                     }else

@@ -1,25 +1,24 @@
 ﻿@model ShoppingCart
 
-<div class="container my-3">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card mb-4 shadow p-3 mb-5 bg-white rounded border-top border-5 rounded shadow">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="~/@Model.Item.ImageUrl" class="img-fluid rounded-start" alt="Item Image">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title fs-3 fw-normal">@Model.Item.Title</h5>
-                            <p class="card-text">@Model.Item.Description</p>
-                            <p class="card-text fw-bold">By @Model.Item.AuthorName</p>
-                            <p class="card-text">@Model.Item.Price$</p>
-                            <p class="card-text">@Model.Item.Genre</p>
-                            <a href="#" class="btn btn-primary">Buy Now</a>
-                            <div class="counter mt-3">
-                                <button class="btn btn-sm btn-secondary ms-2" id="incrementCounter">+</button>
-                                <input type="text" value="@Model.Count" disabled id="counterValue" />
-                                <button class="btn btn-sm btn-secondary ms-1" id="decrementCounter">-</button>
+<form method="post">
+    <input hidden asp-for="ItemId" />
+    <div class="container my-3">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mb-4 shadow p-3 mb-5 bg-white rounded border-top border-5 rounded shadow">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="~/@Model.Item?.ImageUrl" class="img-fluid rounded-start" alt="Item Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title fs-3 fw-normal">@Model.Item?.Title</h5>
+                                <p class="card-text">@Model.Item?.Description</p>
+                                <p class="card-text fw-bold">By @Model.Item?.AuthorName</p>
+                                <p class="card-text">@Model.Item?.Price $</p>
+                                <p class="card-text">@Model.Item?.Genre</p>
+                                <input type="number" asp-for="Count" value="1" class="form-control text-end w-25" />
+                                <button type="submit" class="btn btn-primary">Buy Now</button>
                             </div>
                         </div>
                     </div>
@@ -27,33 +26,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<style>
-    .counter {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    #counterValue {
-        width: 2.2rem;
-        text-align: center;
-    }
-</style>
-
-<script>
-    let countValue = document.querySelector("#counterValue");
-    let incrementButton = document.querySelector("#incrementCounter");
-    let decrementButton = document.querySelector("#decrementCounter");
-
-    incrementButton.addEventListener("click", () => {
-        countValue.value = parseInt(countValue.value) + 1;
-    });
-
-    decrementButton.addEventListener("click", () => {
-        if (parseInt(countValue.value) > 0) {
-            countValue.value = parseInt(countValue.value) - 1;
-        }
-    });
-</script>
+</form>

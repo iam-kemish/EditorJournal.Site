@@ -3,8 +3,8 @@
 
 using EditorJournal.Modals;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using EditorJournal.data.Repo.IRepo;
+using EditorJournal.Modals.ViewModels;
 
 namespace EditorJournal.Areas.Admin.Controllers
 {
@@ -28,27 +28,24 @@ namespace EditorJournal.Areas.Admin.Controllers
         public IActionResult CreateUpdate(int? id)
         {
 
-
-
-            if (id == null || id==0)
+            ItemVM ItemVM = new()
             {
-                return View(new Item());
-            } else
+                Item = new Item()
+            };
+            if(id==null || id == 0)
             {
-                Item item = _UnitOfWork.ItemsRepo.Get(u => u.Id == id);
-                if (item == null)
-                {
-                    return NotFound(); 
-                }
-                return View(item);
-                
-               
+                return View(ItemVM);
+            }else
+            {
+                ItemVM.Item = _UnitOfWork.ItemsRepo.Get(u => u.Id == id);
+                return View(ItemVM);
+
             }
           
            
         }
         [HttpPost]
-        public IActionResult CreateUpdate(Item obj, IFormFile? file)
+        public IActionResult CreateUpdate(ItemVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -61,29 +58,29 @@ namespace EditorJournal.Areas.Admin.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-                    obj.ImageUrl = Path.Combine("Images", "ResultedImage", fileName);
+                    obj.Item.ImageUrl = Path.Combine("Images", "ResultedImage", fileName);
                 }
 
                 
-                if (obj.Id == 0)
+                if (obj.Item.Id == 0)
                 {
                     
-                    _UnitOfWork.ItemsRepo.Add(obj);
+                    _UnitOfWork.ItemsRepo.Add(obj.Item);
                 }
                 else
                 {
                    
-                    var currentItem = _UnitOfWork.ItemsRepo.Get(u => u.Id == obj.Id);
+                    var currentItem = _UnitOfWork.ItemsRepo.Get(u => u.Id == obj.Item.Id);
                     if (currentItem != null)
                     {
-                        currentItem.Description = obj.Description;
-                        currentItem.Genre=obj.Genre;
-                        currentItem.Price = obj.Price;
-                        currentItem.Title = obj.Title;
-                        currentItem.AuthorName = obj.AuthorName;
+                        currentItem.Description = obj.Item.Description;
+                        currentItem.Genre=obj.Item.Genre;
+                        currentItem.Price = obj.Item.Price;
+                        currentItem.Title = obj.Item.Title;
+                        currentItem.AuthorName = obj.Item.AuthorName;
                         if (file != null)
                         {
-                            currentItem.ImageUrl = obj.ImageUrl;
+                            currentItem.ImageUrl = obj.Item.ImageUrl;
                           
                         }
                         _UnitOfWork.ItemsRepo.update(currentItem);
@@ -119,12 +116,12 @@ namespace EditorJournal.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteObject(int id)
         {
-            Item Object = _UnitOfWork.ItemsRepo.Get(u => u.Id == id);
-            if (Object == null)
+            Item itemObj = _UnitOfWork.ItemsRepo.Get(u => u.Id == id);
+            if (itemObj == null)
             {
                 return NotFound();
             }
-            _UnitOfWork.ItemsRepo.Remove(Object);
+            _UnitOfWork.ItemsRepo.Remove(itemObj);
 
 
             _UnitOfWork.Save();
